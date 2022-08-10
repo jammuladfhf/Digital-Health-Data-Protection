@@ -7,35 +7,23 @@ Created on Mon Aug  8 21:13:00 2022
 
 import streamlit as st
 #import pickle
+import pandas as pd
 from streamlit_option_menu import option_menu
 import sqlite3
 from sqlite3 import Error
+    
+def add_data(cols):
+    conn = sqlite3.connect('DHDP.db', check_same_thread=False)
+    cursorObj = conn.cursor()
+# =============================================================================
+#     cursorObj.execute("Drop Table hospitalform1")
+# =============================================================================
+    cursorObj.execute("CREATE TABLE IF NOT EXISTS hospitalform1 (Hospital_Name Text(100), Address1 Text(100),  Address2 Text(100), Phone_Number Text(20), Hospital_Type Text(20), Hospital_Ownership Text(20));")
+    cursorObj.execute("INSERT INTO hospitalform1 VALUES(?, ?, ?, ?, ?, ?);", cols)
+    conn.commit()
+    conn.close()
+    st.success('Successfully Submited')
 
-def sql_connection():
-   try:
-     conn = sqlite3.connect('DHDP.db')
-     return conn
-   except Error:
-     print(Error)
-
-def sql_table(cols):
-   st.write('table entered')
-   conn = sqlite3.connect('DHDP.db')
-   cursorObj = conn.cursor()
-   # Create the table
-   cursorObj.execute("CREATE TABLE IF NOT EXISTS hospitalform1(hospital_name Text(100), address1 Text(100),  address2 Text(100), phone_number Text(20), Hospital_type Text(20), Hospital_ownership Text(20));")
-   # Insert records
-   cursorObj.execute("INSERT INTO hospitalform1 VALUES(?, ?, ?, ?, ?, ?);", cols)
-   conn.commit()
-   st.write('table entered-end')
-   cursorObj.execute("SELECT * FROM hospitalform1")
-   rows = cursorObj.fetchall()
-   for row in rows:
-       st.write(row) 
-   if (conn):
-       conn.close()
-        
-        
 with st.sidebar:
     selected = option_menu('Digital Health Data Protection', 
                             ['Hospital Basic Details', 
@@ -43,10 +31,11 @@ with st.sidebar:
                              'Cybersecurity',
                              'Legislation',
                              'Digital Data Governance',   
-                             'Submit'],
+                             'Submit',
+                             'DataBase'],
                             icons = ['activity', 'app', 'shield-lock','bookmark-fill','diagram-2','card-checklist'],
                             default_index=0)
-hbd = []
+hbd =[]
 if (selected == 'Hospital Basic Details'):
     
     st.title('Enter Hospital Details')
@@ -65,13 +54,13 @@ if (selected == 'Hospital Basic Details'):
         Hospital_type = st.text_input('Hospital Type')
     with col3:
         Hospital_ownership = st.text_input('Hospital Ownership')
-        
      
     if st.button('Save'):
         cols = (Hospital_name, Address1, Address2, Phone_number, Hospital_type, Hospital_ownership)   
         hbd.append(cols)
-        
-sql_table(hbd[0]) 
+        add_data(cols)
+
+
 if (selected == 'Technology'):
     
     st.title('Answer Technology Related Questions with Yes/No')
@@ -102,13 +91,22 @@ if (selected == 'Cybersecurity'):
     threat_againt_DHD = st.text_input("Is there any liability with the threat against digital health data ?")
     security_measures = st.text_input("Implemented appropriate security measures ?")
     Question10 = st.text_input("Question10")
+  
     
 if (selected == 'Submit'):
-    
+
     st.title('Output')
+
+if (selected == 'DataBase'):
+    st.title('Final DataBase')
+    st.markdown("Hospital Basic Details")
+    conn_op = sqlite3.connect('DHDP.db')
+    cursor_op = conn_op.cursor()
+    df = pd.read_sql("Select * from hospitalform1", con=conn_op)
+    st.write(df)
     
-    
-    
+
+
 
         
     
