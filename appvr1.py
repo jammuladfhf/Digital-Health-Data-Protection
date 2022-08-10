@@ -15,7 +15,10 @@ from sqlite3 import Error
 def add_data(cols):
     conn = sqlite3.connect('DHDP.db', check_same_thread=False)
     cursorObj = conn.cursor()
-    cursorObj.execute("CREATE TABLE IF NOT EXISTS hospitalform1(hospital_name Text(100), address1 Text(100),  address2 Text(100), phone_number Text(20), Hospital_type Text(20), Hospital_ownership Text(20));")
+# =============================================================================
+#     cursorObj.execute("Drop Table hospitalform1")
+# =============================================================================
+    cursorObj.execute("CREATE TABLE IF NOT EXISTS hospitalform1 (Hospital_Name Text(100), Address1 Text(100),  Address2 Text(100), Phone_Number Text(20), Hospital_Type Text(20), Hospital_Ownership Text(20));")
     cursorObj.execute("INSERT INTO hospitalform1 VALUES(?, ?, ?, ?, ?, ?);", cols)
     conn.commit()
     conn.close()
@@ -96,6 +99,7 @@ if (selected == 'Submit'):
 
 if (selected == 'DataBase'):
     st.title('Final DataBase')
+    st.markdown("Hospital Basic Details")
     conn_op = sqlite3.connect('DHDP.db')
     cursor_op = conn_op.cursor()
     df = pd.read_sql("Select * from hospitalform1", con=conn_op)
