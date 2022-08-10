@@ -6,25 +6,28 @@ Created on Tue Aug  9 17:28:15 2022
 """
 import sqlite3
 import pandas as pd
-
-try:
-  conn = sqlite3.connect('demo.db')
-  conn.close()
-  print(conn)
-except Error:
-  print(Error)
+import sqlite3
+print(sqlite3.sqlite_version)
 # =============================================================================
-# conn = sqlite3.connect('C:\\Users\\saido\\OneDrive\\Desktop\\Upwork\\Digitalhealth data protection\\Streamlit for DHProj\\Digital-Health-Data-Protection\\demo.db')
+# try:
+#   conn = sqlite3.connect('demo.db')
+#   conn.close()
+#   print(conn)
+# except Error:
+#   print(Error)
+# # =============================================================================
+# # conn = sqlite3.connect('C:\\Users\\saido\\OneDrive\\Desktop\\Upwork\\Digitalhealth data protection\\Streamlit for DHProj\\Digital-Health-Data-Protection\\demo.db')
+# # =============================================================================
+# cursorObj = conn.cursor()
+# # =============================================================================
+# # cursorObj.execute("insert into clg_form values (?, ?)",('ajja', 'age'))
+# # =============================================================================
+# cursorObj.execute("select * from clg_form")
+# display(df)
+# # =============================================================================
+# # import sqlite3
+# # def sql_table(cols):
 # =============================================================================
-cursorObj = conn.cursor()
-# =============================================================================
-# cursorObj.execute("insert into clg_form values (?, ?)",('ajja', 'age'))
-# =============================================================================
-cursorObj.execute("select * from clg_form")
-display(df)
-# =============================================================================
-# import sqlite3
-# def sql_table(cols):
 #    print('table entered')
 #    conn = sqlite3.connect('DHDP.db', check_same_thread=False)
 #    cursorObj = conn.cursor()
