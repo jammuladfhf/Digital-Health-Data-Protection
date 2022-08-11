@@ -1,13 +1,38 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Aug  11 21:13:00 2022
+Created on Mon Aug  8 21:13:00 2022
 
 @author: Narender Jammula
 """
 
 import streamlit as st
+#import pickle
 import pandas as pd
 from streamlit_option_menu import option_menu
+# =============================================================================
+# import sqlite3
+# from sqlite3 import Error
+# =============================================================================
+    
+def add_data(cols, tag='Basic Details'):
+    conn = sqlite3.connect('DHDP.db', check_same_thread=False)
+    cursorObj = conn.cursor()
+    
+    if tag=='Basic Details':
+# =============================================================================
+#         cursorObj.execute("Drop Table hospitalform")
+# =============================================================================
+        cursorObj.execute("CREATE TABLE IF NOT EXISTS hospitalform (Hospital_Name Text(100), Address1 Text(100),  Address2 Text(100), Phone_Number Text(20), Hospital_Type Text(20), Hospital_Ownership Text(20));")
+        cursorObj.execute("INSERT INTO hospitalform VALUES(?, ?, ?, ?, ?, ?);", cols)
+        conn.commit()
+        conn.close()
+        st.success('Successfully Submited')
+    if tag=='Technology':
+        cursorObj.execute("CREATE TABLE IF NOT EXISTS technology_table (Hospital_Name Text(100), Address1 Text(100),  Address2 Text(100), Phone_Number Text(20), Hospital_Type Text(20), Hospital_Ownership Text(20));")
+        cursorObj.execute("INSERT INTO technology_table VALUES(?, ?, ?, ?, ?, ?);", cols)
+        conn.commit()
+        conn.close()
+        st.success('Successfully Submited')
 
 with st.sidebar:
     selected = option_menu('Digital Health Data Protection', 
@@ -43,7 +68,9 @@ if (selected == 'Hospital Basic Details'):
     if st.button('Submit'):
         cols = (Hospital_name, Address1, Address2, Phone_number, Hospital_type, Hospital_ownership)   
         HBD.append(cols)
-
+# =============================================================================
+#         add_data(cols, tag='Basic Details')
+# =============================================================================
 
 Tech = []
 if (selected == 'Technology'):
@@ -64,6 +91,9 @@ if (selected == 'Technology'):
         tech_cols = (health_stored, EHRs, design_data_protection, design_config, privacy_security,
                      encript_heatlth_data, Question7,Question8,Question9,Question10)   
         Tech.append(tech_cols)
+# =============================================================================
+#         add_data(tech_cols, tag='Technology')
+# =============================================================================
     
     
 if (selected == 'Cybersecurity'):  
@@ -85,6 +115,19 @@ if (selected == 'Cybersecurity'):
 if (selected == 'Predict'):
 
     st.title('Output')
+
+# =============================================================================
+# if (selected == 'DataBase'):
+#     st.title('Final DataBase')
+#     st.markdown("Hospital Basic Details")
+#     conn_op = sqlite3.connect('DHDP.db')
+#     cursor_op = conn_op.cursor()
+#     df = pd.read_sql("Select * from hospitalform", con=conn_op)
+#     st.write(df)
+#     
+# =============================================================================
+
+
 
         
     
