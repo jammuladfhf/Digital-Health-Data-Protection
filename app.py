@@ -9,8 +9,10 @@ import streamlit as st
 #import pickle
 import pandas as pd
 from streamlit_option_menu import option_menu
-import sqlite3
-from sqlite3 import Error
+# =============================================================================
+# import sqlite3
+# from sqlite3 import Error
+# =============================================================================
     
 def add_data(cols, tag='Basic Details'):
     conn = sqlite3.connect('DHDP.db', check_same_thread=False)
@@ -66,7 +68,9 @@ if (selected == 'Hospital Basic Details'):
     if st.button('Submit'):
         cols = (Hospital_name, Address1, Address2, Phone_number, Hospital_type, Hospital_ownership)   
         HBD.append(cols)
-        add_data(cols, tag='Basic Details')
+# =============================================================================
+#         add_data(cols, tag='Basic Details')
+# =============================================================================
 
 Tech = []
 if (selected == 'Technology'):
@@ -87,7 +91,9 @@ if (selected == 'Technology'):
         tech_cols = (health_stored, EHRs, design_data_protection, design_config, privacy_security,
                      encript_heatlth_data, Question7,Question8,Question9,Question10)   
         Tech.append(tech_cols)
-        add_data(tech_cols, tag='Technology')
+# =============================================================================
+#         add_data(tech_cols, tag='Technology')
+# =============================================================================
     
     
 if (selected == 'Cybersecurity'):  
@@ -110,14 +116,16 @@ if (selected == 'Predict'):
 
     st.title('Output')
 
-if (selected == 'DataBase'):
-    st.title('Final DataBase')
-    st.markdown("Hospital Basic Details")
-    conn_op = sqlite3.connect('DHDP.db')
-    cursor_op = conn_op.cursor()
-    df = pd.read_sql("Select * from hospitalform", con=conn_op)
-    st.write(df)
-    
+# =============================================================================
+# if (selected == 'DataBase'):
+#     st.title('Final DataBase')
+#     st.markdown("Hospital Basic Details")
+#     conn_op = sqlite3.connect('DHDP.db')
+#     cursor_op = conn_op.cursor()
+#     df = pd.read_sql("Select * from hospitalform", con=conn_op)
+#     st.write(df)
+#     
+# =============================================================================
 
 
 
