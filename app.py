@@ -87,7 +87,7 @@ if (selected == 'Technology'):
         tech_cols = (health_stored, EHRs, design_data_protection, design_config, privacy_security,
                      encript_heatlth_data, Question7,Question8,Question9,Question10)   
         Tech.append(tech_cols)
-        add_data(cols, tag='Technology')
+        add_data(tech_cols, tag='Technology')
     
     
 if (selected == 'Cybersecurity'):  
