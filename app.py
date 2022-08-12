@@ -45,25 +45,27 @@ if (selected == 'Hospital Basic Details'):
         HBD.append(cols)
 
 
-Tech = []
-if (selected == 'Technology'):
-    
-    st.title('Answer Technology Related Questions with Yes/No')
-    health_stored = st.selectbox("Are health data stored on computers ?", ('Yes', 'No'))
-    EHRs = st.selectbox("Meets criteria for meaningful use of EHRs ?", ('Yes', 'No'))
-    design_data_protection = st.selectbox("Is the design and configuration of the health system done with data protection in mind ?", ('Yes', 'No'))
-    design_config = st.selectbox("Is the by design and default incorporated from the onset of the technology selection, design and configuration ?", ('Yes', 'No'))
-    privacy_security = st.selectbox("Are privacy and security integrated into all healthcare apps, devices, and services from the start ?", ('Yes', 'No'))
-    encript_heatlth_data = st.selectbox("Have we incorporated encryption of health data with the design from the start ?", ('Yes', 'No'))
-    Question7 = st.selectbox("Question7", ('Yes', 'No'))
-    Question8 = st.selectbox("Question8", ('Yes', 'No'))
-    Question9 = st.selectbox("Question9", ('Yes', 'No'))
-    Question10 = st.selectbox("Question10", ('Yes', 'No'))
-    
-    if st.button('Submit'):
-        tech_cols = (health_stored, EHRs, design_data_protection, design_config, privacy_security,
-                     encript_heatlth_data, Question7,Question8,Question9,Question10)   
-        Tech.append(tech_cols)
+# =============================================================================
+# Tech = []
+# if (selected == 'Technology'):
+#     
+#     st.title('Answer Technology Related Questions with Yes/No')
+#     health_stored = st.selectbox("Are health data stored on computers ?", ('Yes', 'No'))
+#     EHRs = st.selectbox("Meets criteria for meaningful use of EHRs ?", ('Yes', 'No'))
+#     design_data_protection = st.selectbox("Is the design and configuration of the health system done with data protection in mind ?", ('Yes', 'No'))
+#     design_config = st.selectbox("Is the by design and default incorporated from the onset of the technology selection, design and configuration ?", ('Yes', 'No'))
+#     privacy_security = st.selectbox("Are privacy and security integrated into all healthcare apps, devices, and services from the start ?", ('Yes', 'No'))
+#     encript_heatlth_data = st.selectbox("Have we incorporated encryption of health data with the design from the start ?", ('Yes', 'No'))
+#     Question7 = st.selectbox("Question7", ('Yes', 'No'))
+#     Question8 = st.selectbox("Question8", ('Yes', 'No'))
+#     Question9 = st.selectbox("Question9", ('Yes', 'No'))
+#     Question10 = st.selectbox("Question10", ('Yes', 'No'))
+#     
+#     if st.button('Submit'):
+#         tech_cols = (health_stored, EHRs, design_data_protection, design_config, privacy_security,
+#                      encript_heatlth_data, Question7,Question8,Question9,Question10)   
+#         Tech.append(tech_cols)
+# =============================================================================
     
     
 if (selected == 'Cybersecurity'):  
