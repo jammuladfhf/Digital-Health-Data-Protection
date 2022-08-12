@@ -4,10 +4,10 @@ Created on Mon Aug  11 21:13:00 2022
 
 @author: Narender Jammula
 """
-
-import streamlit as st
 import pandas as pd
+import streamlit as st
 from streamlit_option_menu import option_menu
+
 
 with st.sidebar:
     selected = option_menu('Digital Health Data Protection', 
