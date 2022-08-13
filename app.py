@@ -32,22 +32,37 @@ def table_creation(values):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     #while testing uncomment drop query and for final data comment it
-    cur.execute("Drop table hospital_data;") 
+
+# =============================================================================
+#     cur.execute("Drop table hospital_data;") 
+# =============================================================================
+
     cur.execute("CREATE TABLE IF NOT EXISTS hospital_data(hospital_name TEXT PRIMARY KEY  NOT NULL, \
 					   address1           TEXT, address2           TEXT, phone_number       TEXT, \
-					   hospital_type      TEXT, hospital_ownership TEXT, health_stored  TEXT, \
-					   EHRs TEXT,  design_data_protection TEXT, design_config TEXT, \
-					   privacy_security TEXT, encript_heatlth_data TEXT, Question7 TEXT, \
-					   Question8 TEXT, Question9  TEXT, Question10 TEXT, Predict TEXT \
+					   hospital_type      TEXT, hospital_ownership TEXT, \
+                       tech_health_stored  TEXT, \
+					   tech_EHRs TEXT,  tech_design_data_protection TEXT, tech_design_config TEXT, \
+					   tech_privacy_security TEXT, tech_encript_heatlth_data TEXT, tech_Question7 TEXT, \
+					   tech_Question8 TEXT, tech_Question9  TEXT, tech_Question10 TEXT,  \
+                       cyber_data_breach TEXT, \
+                       cyber_prepared_for_health_breach TEXT, cyber_internal_threat TEXT, cyber_external_threat TEXT, \
+                       cyber_data_breach_procedure TEXT, cyber_process_for_policy_containment TEXT, cyber_liability_DHD TEXT, \
+                       cyber_threat_againt_DHD TEXT, cyber_security_measures TEXT, cyber_Question10 TEXT,  \
+                       Predict TEXT  \
 					);")
+        
     cur.execute("""INSERT INTO hospital_data (hospital_name, address1, address2, phone_number, hospital_type, \
-                hospital_ownership, health_stored, EHRs, design_data_protection, design_config, \
-                privacy_security, encript_heatlth_data, Question7, Question8, Question9, \
-                Question10, Predict) VALUES{}; """.format(values))
+                hospital_ownership, tech_health_stored, tech_EHRs, tech_design_data_protection, tech_design_config, \
+                tech_privacy_security, tech_encript_heatlth_data, tech_Question7, tech_Question8, tech_Question9, \
+                tech_Question10, cyber_data_breach, cyber_prepared_for_health_breach, cyber_internal_threat,   \
+                cyber_external_threat, cyber_data_breach_procedure, cyber_process_for_policy_containment, \
+                cyber_liability_DHD, cyber_threat_againt_DHD, cyber_security_measures, 
+                cyber_Question10, Predict) VALUES{}; """.format(values))
+        
     conn.commit() 
     cur.close() 
     conn.close()
-
+ 
 with st.sidebar:
     selected = option_menu('Digital Health Data Protection', 
                             ['Hospital Basic Details', 
@@ -79,7 +94,6 @@ if (selected == 'Hospital Basic Details'):
     with col3:
         Hospital_ownership = st.text_input('Hospital Ownership')
      
-
     if st.button('Save'):
         if Hospital_name != '':
             st.session_state['Hospital_name'] = Hospital_name
@@ -92,7 +106,7 @@ if (selected == 'Hospital Basic Details'):
         else:
             st.warning('Fill Mandatory Fields')
 
-
+#Technology
 if (selected == 'Technology'):
     
     st.title('Answer Technology Related Questions with Yes/No')
@@ -126,25 +140,45 @@ if (selected == 'Technology'):
             st.session_state['tech_Question10'] = Question10
             st.success("Saved Successfully")
          
-# =============================================================================
-# if (selected == 'Cybersecurity'):  
-#     
-#     st.title('Answer Cybersecurity Related Questions with Yes/No')
-#     
-#     data_breach = st.text_input("Recording where necessary, reporting health data breaches ?")
-#     prepared_for_health_breach = st.text_input("Are you prepared for any health data breach ?")
-#     internal_threat = st.text_input("Are there internal threat to digital health data ?")
-#     external_threat = st.text_input("Are there external threat to Digital health data ?")
-#     data_breach_procedure = st.text_input("Do you have any data breach incidence reporting procedures ?")
-#     process_for_policy_containment = st.text_input("Do you have a process or policy for containment ?")
-#     liability_DHD = st.text_input("What liability does digital health data and corresponding sharing, linking and reuse practices pose to data protection ?")
-#     threat_againt_DHD = st.text_input("Is there any liability with the threat against digital health data ?")
-#     security_measures = st.text_input("Implemented appropriate security measures ?")
-#     Question10 = st.text_input("Question10")
-#   
+#Cybersecurity           
+if (selected == 'Cybersecurity'):  
+    
+    st.title('Answer Cybersecurity Related Questions with Yes/No')
+    
+    data_breach = st.selectbox("Recording where necessary, reporting health data breaches ?", ('Select','Yes', 'No'))
+    prepared_for_health_breach = st.selectbox("Are you prepared for any health data breach ?", ('Select','Yes', 'No'))
+    internal_threat = st.selectbox("Are there internal threat to digital health data ?", ('Select','Yes', 'No'))
+    external_threat = st.selectbox("Are there external threat to Digital health data ?", ('Select','Yes', 'No'))
+    data_breach_procedure = st.selectbox("Do you have any data breach incidence reporting procedures ?", ('Select','Yes', 'No'))
+    process_for_policy_containment = st.selectbox("Do you have a process or policy for containment ?", ('Select','Yes', 'No'))
+    liability_DHD = st.selectbox("What liability does digital health data and corresponding sharing, linking and reuse practices pose to data protection ?", ('Select','Yes', 'No'))
+    threat_againt_DHD = st.selectbox("Is there any liability with the threat against digital health data ?", ('Select','Yes', 'No'))
+    security_measures = st.selectbox("Implemented appropriate security measures ?", ('Select','Yes', 'No'))
+    Question10 = st.selectbox("Question10", ('Select','Yes', 'No'))
+ 
+    if st.button('Save'):
+        if (data_breach == 'Select') or (prepared_for_health_breach == 'Select') or (internal_threat == 'Select') or (external_threat == 'Select') or \
+           (data_breach_procedure == 'Select') or (process_for_policy_containment == 'Select') or (liability_DHD == 'Select') or \
+           (threat_againt_DHD == 'Select') or (security_measures == 'Select')or (Question10 == 'Select'):
+               st.warning('Please fill all the required fields with yes or no'.upper())  
+        else:  
+            st.session_state['cyber_data_breach'] = data_breach
+            st.session_state['cyber_prepared_for_health_breach'] = prepared_for_health_breach
+            st.session_state['cyber_internal_threat'] = internal_threat
+            st.session_state['cyber_external_threat'] = external_threat
+            st.session_state['cyber_data_breach_procedure'] = data_breach_procedure
+            st.session_state['cyber_process_for_policy_containment'] = process_for_policy_containment
+            st.session_state['cyber_liability_DHD'] = liability_DHD
+            st.session_state['cyber_threat_againt_DHD'] = threat_againt_DHD
+            st.session_state['cyber_security_measures'] = security_measures
+            st.session_state['cyber_Question10'] = Question10
+            st.success("Saved Successfully")
+
+    
+ 
 if (selected == 'Predict'):
     st.title('Output')
-    method1_predict =  predict_method(st.session_state, domain_count=1)
+    method1_predict =  predict_method(st.session_state, domain_count=2)
     individual_op, final_op = method1_predict.main()
     st.session_state['predict'] = final_op
     st.write(st.session_state)

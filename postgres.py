@@ -27,18 +27,21 @@ form_data = {"Hospital_name":"SOUTHEAST ALABAMA MEDICAL CENTER",
 "tech_Question7":"Yes",
 "tech_Question8":"Yes",
 "tech_Question9":"Yes",
-"tech_Question10":"Yes",
-"cyber_health_stored":"Yes",
-"cyber_EHRs":"Yes",
-"cyber_design_data_protection":"Yes",
-"cyber_design_config":"Yes",
-"cyber_privacy_security":"Yes",
-"cyber_encript_heatlth_data":"Yes",
-"cyber_Question7":"Yes",
-"cyber_Question8":"Yes",
-"cyber_Question9":"Yes",
-"cyber_Question10":"Yes"
+"tech_Question10":"Yes"
 }
+
+# =============================================================================
+# "cyber_health_stored":"Yes",
+# "cyber_EHRs":"Yes",
+# "cyber_design_data_protection":"Yes",
+# "cyber_design_config":"Yes",
+# "cyber_privacy_security":"Yes",
+# "cyber_encript_heatlth_data":"Yes",
+# "cyber_Question7":"Yes",
+# "cyber_Question8":"Yes",
+# "cyber_Question9":"Yes",
+# "cyber_Question10":"Yes"
+# =============================================================================
 
 # =============================================================================
 # individual_op, final_op = pp.main()
