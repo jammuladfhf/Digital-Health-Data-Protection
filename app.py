@@ -84,13 +84,14 @@ if (selected == 'Hospital Basic Details'):
     with col1:
         Hospital_name = st.text_input('Hospital Name*')
     with col2:
-        Address1 = st.text_input('Address 1')
+        Address2 = st.text_input('Address 2')  
     with col3:
-        Address2 = st.text_input('Address 2')
-    with col1:
-        Phone_number = st.text_input('Phone Number')
-    with col2:
         Hospital_type = st.text_input('Hospital Type')
+        
+    with col1:
+        Address1 = st.text_input('Address 1')
+    with col2:
+        Phone_number = st.text_input('Phone Number')
     with col3:
         Hospital_ownership = st.text_input('Hospital Ownership')
      
