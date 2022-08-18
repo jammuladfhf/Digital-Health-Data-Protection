@@ -4,10 +4,12 @@ Created on Fri Aug 12 21:56:42 2022
 
 @author: saido
 """
-import uuid
-print (uuid.uuid1())
-import psycopg2
-import psycopg2.extras
+# =============================================================================
+# import uuid
+# print (uuid.uuid1())
+# import psycopg2
+# import psycopg2.extras
+# =============================================================================
 from predict import predict_method
 
 
@@ -27,7 +29,17 @@ form_data = {"Hospital_name":"SOUTHEAST ALABAMA MEDICAL CENTER",
 "tech_Question7":"Yes",
 "tech_Question8":"Yes",
 "tech_Question9":"Yes",
-"tech_Question10":"Yes"
+"tech_Question10":"Yes",
+"cyber_health_stored":"Yes",
+"cyber_EHRs":"Yes",
+"cyber_design_data_protection":"Yes",
+"cyber_design_config":"Yes",
+"cyber_privacy_security":"Yes",
+"cyber_encript_heatlth_data":"Yes",
+"cyber_Question7":"Yes",
+"cyber_Question8":"Yes",
+"cyber_Question9":"Yes",
+"cyber_Question10":"Yes"
 }
 
 # =============================================================================
@@ -46,8 +58,8 @@ form_data = {"Hospital_name":"SOUTHEAST ALABAMA MEDICAL CENTER",
 # =============================================================================
 # individual_op, final_op = pp.main()
 # =============================================================================
-method1_predict =  predict_method(form_data, domain_count=1)
-individual_op, final_op = method1_predict.main()
+method1_predict =  predict_method(form_data, domain_count=2)
+individual_op, final_op = method1_predict.method2()
 print(individual_op, final_op )
 # =============================================================================
 # DB_HOST = "ec2-34-193-44-192.compute-1.amazonaws.com"

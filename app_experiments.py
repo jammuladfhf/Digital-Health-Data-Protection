@@ -4,9 +4,6 @@ Created on Mon Aug  11 21:13:00 2022
 
 @author: Narender Jammula
 """
-
-#'This version is without NEXT button'
-
 ################################# Import Libraries ############################
 #streamlit libraries
 from predict import predict_method
@@ -21,7 +18,12 @@ import psycopg2.extras
 #custom modules
 from predict import predict_method
 
+#next button
+import pickle as pkle
+import os.path
 
+
+#with next buttuon extension for app_backup.py file
 ####################### Main Code  ############################################
 #Credentials
 DB_HOST = "ec2-34-193-44-192.compute-1.amazonaws.com"
@@ -35,7 +37,6 @@ def table_creation(values):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     #while testing uncomment drop query and for final data comment it
-
 # =============================================================================
 #     cur.execute("Drop table hospital_data;") 
 # =============================================================================
@@ -65,24 +66,68 @@ def table_creation(values):
     conn.commit() 
     cur.close() 
     conn.close()
+ 
     
-with st.sidebar:
-    selected = option_menu('Digital Health Data Protection', 
-                            ['Hospital Basic Details', 
-                             'Technology',
-                             'Cybersecurity',
-                             'Legislation',
-                             'Digital Data Governance',   
-                             'Predict'],
-                            icons = ['activity', 'app', 'shield-lock','bookmark-fill','diagram-2','card-checklist'],
-                            default_index=0)
+#Next Button  
+new_choice = ['Hospital Basic Details', 'Technology','Cybersecurity', 'Legislation', 'Digital Data Governance', 'Predict', 'DataBase']
+if os.path.isfile('next.p'):
+    next_clicked = pkle.load(open('next.p', 'rb'))
+    # check if you are at the end of the list of pages
+    if next_clicked == len(new_choice):
+        next_clicked = 0 # go back to the beginning i.e. homepage
+else:
+    next_clicked = 0
+st.write(next_clicked)    
+  
+if st.button('Next'):
+    
+    next_clicked = next_clicked + 1
+        
+    # check if you are at the end of the list of pages again
+    if next_clicked == len(new_choice):
+        next_clicked = 0 
+    
+    st.header(f'next {next_clicked}')   
+    
+    with st.sidebar:
+        selected = option_menu('Digital Health Data Protection', 
+                                ['Hospital Basic Details', 
+                                  'Technology',
+                                  'Cybersecurity',
+                                  'Legislation',
+                                  'Digital Data Governance',   
+                                  'Predict',
+                                  'DataBase'],
+                                icons = ['activity', 'app', 'shield-lock','bookmark-fill','diagram-2','card-checklist'],
+                                default_index=next_clicked)
+        pkle.dump(new_choice.index(selected), open('next.p', 'wb'))   
+    st.header(f'with out next {next_clicked}')     
 
-    
-if (selected == 'Hospital Basic Details'):
-    
-    st.session_state = {}
+else:
+    next_clicked = pkle.load(open('next.p', 'rb'))
+    if next_clicked == len(new_choice):
+        next_clicked = 0 
+        
+    st.header(f'next {next_clicked}')   
+    with st.sidebar:
+        selected = option_menu('Digital Health Data Protection', 
+                                ['Hospital Basic Details', 
+                                  'Technology',
+                                  'Cybersecurity',
+                                  'Legislation',
+                                  'Digital Data Governance',   
+                                  'Predict',
+                                  'DataBase'],
+                                icons = ['activity', 'app', 'shield-lock','bookmark-fill','diagram-2','card-checklist']
+                                )
+        pkle.dump(new_choice.index(selected), open('next.p', 'wb')) 
+    st.header(f'with out next {next_clicked}')  
+
+
+#Hospital Basic Details
+if (selected == 'Hospital Basic Details'):   
     st.title('Enter Hospital Details')
-    
+    st.session_state = {}
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -98,8 +143,6 @@ if (selected == 'Hospital Basic Details'):
         Phone_number = st.text_input('Phone Number')
     with col3:
         Hospital_ownership = st.text_input('Hospital Ownership')
-        
-        
     if  st.button('Save'):
         if Hospital_name != '':
             st.session_state['Hospital_name'] = Hospital_name
@@ -109,14 +152,14 @@ if (selected == 'Hospital Basic Details'):
             st.session_state['Hospital_type'] = Hospital_type
             st.session_state['Hospital_ownership'] = Hospital_ownership
             st.success("Saved Successfully")
+            
         else:
             st.warning('Fill Mandatory Fields')
-        
+
+
 
 #Technology
-
-if (selected == 'Technology'):
-     
+if (selected == 'Technology') :     
     st.title('Technology Domain')
     
     health_stored = st.selectbox("Are health data stored on computers ?", ('Select','Yes', 'No'))
@@ -131,6 +174,7 @@ if (selected == 'Technology'):
     Question10 = st.selectbox("Question10", ('Select', 'Yes', 'No'))
     
     if st.button('Save'):
+       
         if (health_stored == 'Select') or (EHRs == 'Select') or (design_data_protection == 'Select') or (design_config == 'Select') or \
            (privacy_security == 'Select') or (encript_heatlth_data == 'Select') or (Question7 == 'Select') or (Question8 == 'Select') or \
            (Question9 == 'Select') or (Question10 == 'Select'):
@@ -147,7 +191,7 @@ if (selected == 'Technology'):
             st.session_state['tech_Question9'] = Question9
             st.session_state['tech_Question10'] = Question10
             st.success("Saved Successfully")
-         
+     
 #Cybersecurity           
 if (selected == 'Cybersecurity'):  
     
@@ -186,19 +230,10 @@ if (selected == 'Cybersecurity'):
  
 if (selected == 'Predict'):
     st.title('Output')
-    predict_method =  predict_method(st.session_state, domain_count=2)
-    individual_op, final_op = predict_method.method2()
-    
+    method1_predict =  predict_method(st.session_state, domain_count=2)
+    individual_op, final_op = method1_predict.method2()
     st.session_state['predict'] = final_op
-    hospital_name = st.session_state['Hospital_name']
-    st.header(f'{hospital_name} is {final_op}')
-    risk_table = pd.DataFrame()
-    risk_table['Domain Name'] = individual_op.keys()
-    risk_table['Domain Name'] = risk_table['Domain Name'].apply(lambda x:x.upper())
-    risk_table['Risk level'] = individual_op.values()
-    risk_table.style.apply(lambda x: ["background: red"
-                            if v == 'Medium Risk' else "" for v in x])
-    st.dataframe(risk_table)
+    st.write(st.session_state)
 
     try:
         table_creation(tuple(st.session_state.values()))

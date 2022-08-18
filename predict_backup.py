@@ -4,12 +4,9 @@ Created on Sat Aug 13 15:36:39 2022
 
 @author: Narender Jammula
 """
-import os
 import pandas as pd
-import joblib
 import warnings
 warnings.filterwarnings("ignore")
-
 
 # =============================================================================
 # form_data = {"Hospital_name":"SOUTHEAST ALABAMA MEDICAL CENTER",
@@ -40,7 +37,6 @@ warnings.filterwarnings("ignore")
 # "cyber_Question10":"Yes"
 # }
 # =============================================================================
-
 class predict_method:
     
     def __init__(self, form_data, domain_count):
@@ -80,37 +76,26 @@ class predict_method:
             return 'Non-Compliant'
         else:
             return 'Compliant'
-    
-    #ML model
-    def predict_risk_level(self, l):
-          print(os.getcwd())
-          model = joblib.load("C:/Users/saido/OneDrive/Desktop/Upwork/Digitalhealth data protection/Streamlit for DHProj/Digital-Health-Data-Protection/digitalhealth_linear_svc.joblib")
-          pred = model.predict([l])
-          return pred   
-      
+     
     # domain level output    
-    def domain_op(self, df, regex_tag, method='calc'):
-        if method=='calc':
-            domain_df = df.filter(regex=regex_tag)
-            domain_df.loc[:,'sum'] = domain_df.sum(axis=1)
-            domain_df.loc[:,'count'] = domain_df.shape[1] - 1
-            domain_df.loc[:,'risk_scale'] = domain_df['sum']/domain_df['count']*10
-            domain_df.loc[:,'risk_level'] = domain_df['risk_scale'].apply(self.risk_level)
-            tech_risk = domain_df.risk_level.values[0]
-        else:
-            domain_df = df.filter(regex=regex_tag).values
-            tech_risk = self.predict_risk_level(domain_df[0])
+    def domain_op(self, df, regex_tag):
+        
+        domain_df = df.filter(regex=regex_tag)
+        domain_df.loc[:,'sum'] = domain_df.sum(axis=1)
+        domain_df.loc[:,'count'] = domain_df.shape[1] - 1
+        domain_df.loc[:,'risk_scale'] = domain_df['sum']/domain_df['count']*10
+        domain_df.loc[:,'risk_level'] = domain_df['risk_scale'].apply(self.risk_level)
+        tech_risk = domain_df.risk_level.values[0]
         return tech_risk
-    
-   
+        
     
     def method1(self):
         
         form_data_replace = self.replace_yes_no()
         df = pd.DataFrame([form_data_replace], columns = form_data_replace.keys())
         
-        tech_op = self.domain_op(df, regex_tag='tech',method='calc')
-        cyber_op = self.domain_op(df, regex_tag='cyber', method='calc')
+        tech_op = self.domain_op(df, regex_tag='tech')
+        cyber_op = self.domain_op(df, regex_tag='cyber')
         all_risk_values = {'technology':tech_op, 'cyber_security':cyber_op}
         
         return all_risk_values, self.final_op(all_risk_values.values(), self.domain_count)
@@ -120,8 +105,57 @@ class predict_method:
         form_data_replace = self.replace_yes_no()
         df = pd.DataFrame([form_data_replace], columns = form_data_replace.keys())
         
-        tech_op = self.domain_op(df, regex_tag='tech', method='model')
-        cyber_op = self.domain_op(df, regex_tag='cyber', method='model')
-        all_risk_values = {'technology':tech_op[0], 'cyber_security':cyber_op[0]}
+        tech_op = self.domain_op(df, regex_tag='tech')
+        cyber_op = self.domain_op(df, regex_tag='cyber')
+        all_risk_values = {'technology':tech_op, 'cyber_security':cyber_op}
         
         return all_risk_values, self.final_op(all_risk_values.values(), self.domain_count)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+# class predict_method():
+# =============================================================================
+
+# =============================================================================
+# def __init__(self):
+#     return 
+# 
+# =============================================================================
+
+# =============================================================================
+# 
+# def method1(self, ):
+#     ''' 
+#     This method does not involve any Machine Learning
+#     Algorithms, it a rule based approach
+#     '''
+#     
+#     
+#     
+#     
+#     
+#     
+#     return
+# # =============================================================================
+# # def method2():
+# #    
+# #     return
+# # =============================================================================
+# 
+# =============================================================================
