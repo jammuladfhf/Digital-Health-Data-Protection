@@ -84,7 +84,7 @@ class predict_method:
     #ML model
     def predict_risk_level(self, l):
           print(os.getcwd())
-          model = joblib.load("C:/Users/saido/OneDrive/Desktop/Upwork/Digitalhealth data protection/Streamlit for DHProj/Digital-Health-Data-Protection/digitalhealth_linear_svc.joblib")
+          model = joblib.load("digitalhealth_linear_svc.joblib")
           pred = model.predict([l])
           return pred   
       
