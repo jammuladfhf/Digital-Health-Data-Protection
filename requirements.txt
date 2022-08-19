@@ -1,0 +1,18 @@
+<<<<<<< HEAD
+numpy==1.21.4
+pickle-mixin==1.0.2
+streamlit==1.2.0
+streamlit-option-menu==0.3.2
+protobuf==3.20.1
+psycopg2-binary == 2.9.3
+joblib == 1.1.0
+=======
+numpy==1.21.4
+pickle-mixin==1.0.2
+streamlit==1.2.0
+streamlit-option-menu==0.3.2
+protobuf==3.20.1
+psycopg2-binary == 2.9.3
+joblib == 1.1.0
+>>>>>>> 2b740e3368c69e207a7ed78cfd8abb35b0c6b841
+sklearn
