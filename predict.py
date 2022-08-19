@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 """
 Created on Sat Aug 13 15:36:39 2022
@@ -254,4 +253,3 @@ class predict_method:
         all_risk_values = {'technology':tech_op[0], 'cyber_security':cyber_op[0]}
         
         return all_risk_values, self.final_op(all_risk_values.values(), self.domain_count)
->>>>>>> 2b740e3368c69e207a7ed78cfd8abb35b0c6b841
