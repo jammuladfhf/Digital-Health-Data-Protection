@@ -36,7 +36,7 @@ def table_creation(values):
     
     #while testing uncomment drop query and for final data comment it
 
-    cur.execute("Drop table hospital_data;") 
+#     cur.execute("Drop table hospital_data;") 
 
     cur.execute("CREATE TABLE IF NOT EXISTS hospital_data(hospital_name TEXT PRIMARY KEY  NOT NULL, \
 					   address1           TEXT, address2           TEXT, phone_number       TEXT, \
